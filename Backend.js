@@ -51,13 +51,13 @@ mongoose.connect("mongodb+srv://ragulranjeeth2105116:Ragul655@watermappingcluste
   });
 
 // Define schema and model for sensor data
-// const sensorDataSchema = new mongoose.Schema({
-//   values: {
-//     type: Number
-//   }
-// });
+const sensorDataSchema = new mongoose.Schema({
+  values: {
+    type: Number
+  }
+});
 
-//  const SensorData = mongoose.model('sensordatawaterqualitymanagements', sensorDataSchema);
+ const SensorData = mongoose.model('sensordatawaterqualitymanagements', sensorDataSchema);
 
 // Route to handle root endpoint
 app.get('/', (req, res) => {
