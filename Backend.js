@@ -42,7 +42,7 @@ app.use(cors(corsOptions));
 
 
 // Connect to MongoDB using promise-based syntax
-mongoose.connect("mongodb+srv://ragulranjeeth2105116:Ragul655@watermappingcluster1.n9pozag.mongodb.net/SensorData?retryWrites=true&w=majority&appName=WaterMappingCluster1")
+mongoose.connect(process.env.mongoUrl)
   .then(() => {
     console.log("Connected to MongoDB");
   })
@@ -51,13 +51,13 @@ mongoose.connect("mongodb+srv://ragulranjeeth2105116:Ragul655@watermappingcluste
   });
 
 // Define schema and model for sensor data
-const sensorDataSchema = new mongoose.Schema({
-  values: {
-    type: Number
-  }
-});
+// const sensorDataSchema = new mongoose.Schema({
+//   values: {
+//     type: Number
+//   }
+// });
 
- const SensorData = mongoose.model('sensordatawaterqualitymanagements', sensorDataSchema);
+//  const SensorData = mongoose.model('sensordatawaterqualitymanagements', sensorDataSchema);
 
 // Route to handle root endpoint
 app.get('/', (req, res) => {
@@ -65,7 +65,7 @@ app.get('/', (req, res) => {
 });
 
 // Route to handle incoming sensor data (POST request)
-app.post('/sensor', async (req, res) => {
+router.post('/sensor', async (req, res) => {
   try {
     const { values } = req.body;
     
@@ -90,30 +90,31 @@ app.get('/Home',(req,res)=>{
 })
 
 // Route to get sensor data (GET request)
-// app.post('/sensor', async(req, res) =>
-//  {
-//   SensorData.find((err, sensordatawaterqualitymanagements) => {
-//     if (err) {
-//       console.error("Error fetching data:", err);
-//       res.status(500).json({ error: 'Internal Server Error' });
-//     } else {
-//       console.log("Sensor data:", sensordatawaterqualitymanagements);
-//       res.status(201).json(sensordatawaterqualitymanagements);
-//      // console.log(sensor_readings ${JSON.stringify(sensorReadings)});
+app.post('/sensor', async(req, res) =>
+ {
+  SensorData.find((err, sensordatawaterqualitymanagements) => {
+    if (err) {
+      console.error("Error fetching data:", err);
+      res.status(500).json({ error: 'Internal Server Error' });
+    } else {
+      console.log("Sensor data:", sensordatawaterqualitymanagements);
+      res.status(201).json(sensordatawaterqualitymanagements);
+     // console.log(sensor_readings ${JSON.stringify(sensorReadings)});
     
-//     }
-//   });
-// });
+    }
+  });
+});
 
 // Mount the router on /api path
 app.use('/sensor', router);
 
 // Create HTTP server
-const PORT = 8081;
+const PORT = process.env.port;
 const server = http.createServer(app);
 server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
 
 
 
