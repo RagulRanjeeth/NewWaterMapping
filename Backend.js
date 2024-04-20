@@ -65,7 +65,7 @@ app.get('/', (req, res) => {
 });
 
 // Route to handle incoming sensor data (POST request)
-router.post('/sensor', async (req, res) => {
+app.post('/sensor', async (req, res) => {
   try {
     const { values } = req.body;
     
@@ -90,20 +90,20 @@ app.get('/Home',(req,res)=>{
 })
 
 // Route to get sensor data (GET request)
-app.post('/sensor', async(req, res) =>
- {
-  SensorData.find((err, sensordatawaterqualitymanagements) => {
-    if (err) {
-      console.error("Error fetching data:", err);
-      res.status(500).json({ error: 'Internal Server Error' });
-    } else {
-      console.log("Sensor data:", sensordatawaterqualitymanagements);
-      res.status(201).json(sensordatawaterqualitymanagements);
-     // console.log(sensor_readings ${JSON.stringify(sensorReadings)});
+// app.post('/sensor', async(req, res) =>
+//  {
+//   SensorData.find((err, sensordatawaterqualitymanagements) => {
+//     if (err) {
+//       console.error("Error fetching data:", err);
+//       res.status(500).json({ error: 'Internal Server Error' });
+//     } else {
+//       console.log("Sensor data:", sensordatawaterqualitymanagements);
+//       res.status(201).json(sensordatawaterqualitymanagements);
+//      // console.log(sensor_readings ${JSON.stringify(sensorReadings)});
     
-    }
-  });
-});
+//     }
+//   });
+// });
 
 // Mount the router on /api path
 app.use('/sensor', router);
